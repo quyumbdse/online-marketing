@@ -13,7 +13,25 @@ export const getProductInfo = (product) => {
     //console.log(productInfo);
     // Insert into Cart
     addInfoCart (productInfo);
+    totalPrice();
+}
+
+// total price calculate function
+function totalPrice() {
     
+    const total = [];
+    const items = document.querySelectorAll('.item-info');
+    items.forEach(function (item) {
+        total.push(parseFloat(item.textContent));
+    });
+   // console.log(total);
+   const totalPrice = total.reduce(function (total, item) {
+       total += item;
+       return total;
+   }, 0);
+
+   // console.log('total '+ totalPrice);
+    document.querySelector('#total-price').textContent = totalPrice;
 }
 
 const templateBuild = function(product) {
@@ -27,7 +45,7 @@ const templateBuild = function(product) {
           <img src="${product.image}" width="100" height="150"/>
           <span class="item-info">
               <span>${product.price}</span>
-          </span>
+      </span>
       </span>
       <span class="item-right">
           <button class="btn btn-xs btn-danger pull-right" data-id ="${product.id}">x</button>
@@ -37,6 +55,7 @@ const templateBuild = function(product) {
     `;
     // add into shoping cart
     elements.shopingCartContent.appendChild(row);
+    
 }
 
 const addInfoCart = (product) => {
